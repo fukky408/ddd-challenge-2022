@@ -6,6 +6,7 @@
   "author": "shinya fukimbara <progriro@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "fastify": "^4.9.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
