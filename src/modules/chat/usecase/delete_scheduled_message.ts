@@ -1,19 +1,22 @@
 import { UniqueID } from "../../../shared/domain/UniqueID";
-import { ChatRoom } from "../domain/ChatRoom";
 import { ScheduledChatMessageRepo } from "../infra/repository/ScheduledMessage"
+import { ChatRoomRepo } from "../infra/repository/chatRoom"
 
 export class DeleteScheduledMessage {
-  private repo: ScheduledChatMessageRepo;
+  private scheduledChatMessageRepo: ScheduledChatMessageRepo;
+  private chatRoomRepo: ChatRoomRepo;
 
-  constructor(repo: ScheduledChatMessageRepo) {
-    this.repo = repo
+  constructor(chatRoomRepo: ChatRoomRepo, scheduledChatMessageRepo: ScheduledChatMessageRepo) {
+    this.scheduledChatMessageRepo = scheduledChatMessageRepo
+    this.chatRoomRepo = chatRoomRepo
   }
 
-  do(chatRoom: ChatRoom, id: UniqueID) {
-    const msg = this.repo.get(id)
+  do(id: UniqueID) {
+    const msg = this.scheduledChatMessageRepo.get(id)
+    const chatRoom = this.chatRoomRepo.get(msg.chatId)
     if (!chatRoom.memberExist(msg.userId)) {
       throw "member not include in chatroom"
     }
-    this.repo.delete(id)
+    this.scheduledChatMessageRepo.delete(id)
   }
 }

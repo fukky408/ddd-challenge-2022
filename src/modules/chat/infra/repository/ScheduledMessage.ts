@@ -8,7 +8,6 @@ export interface ScheduledChatMessageRepo {
   delete(id: UniqueID): void;
 }
 
-
 let messages: ScheduledChatMessage[] = []
 
 export class ScheduledChatMessageRepoImple {

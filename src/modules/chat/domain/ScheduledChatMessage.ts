@@ -38,6 +38,7 @@ type ScheduledChatMessageProps = {
 export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public readonly id: UniqueID;
   public readonly userId: UniqueID;
+  public readonly chatId: UniqueID;
 
   constructor(props: ScheduledChatMessageProps, id?: string) {
     super(props, id);

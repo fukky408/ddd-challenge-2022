@@ -1,18 +1,22 @@
 import { ScheduledChatMessage } from "../domain/ScheduledChatMessage";
-import { ChatRoom } from "../domain/ChatRoom";
 import { ScheduledChatMessageRepo } from "../infra/repository/ScheduledMessage"
+import { ChatRoomRepo } from "../infra/repository/chatRoom"
+
 
 export class EditScheduledMessage {
-  private repo: ScheduledChatMessageRepo;
+  private scheduledChatMessageRepo: ScheduledChatMessageRepo;
+  private chatRoomRepo: ChatRoomRepo;
 
-  constructor(repo: ScheduledChatMessageRepo) {
-    this.repo = repo
+  constructor(chatRoomRepo: ChatRoomRepo, scheduledChatMessageRepo: ScheduledChatMessageRepo) {
+    this.scheduledChatMessageRepo = scheduledChatMessageRepo
+    this.chatRoomRepo = chatRoomRepo
   }
 
-  do(chatRoom: ChatRoom, msg: ScheduledChatMessage) {
+  do(msg: ScheduledChatMessage) {
+    const chatRoom = this.chatRoomRepo.get(msg.chatId)
     if (!chatRoom.memberExist(msg.userId)) {
       throw "member not include in chatroom"
     }
-    this.repo.update(msg)
+    this.scheduledChatMessageRepo.update(msg)
   }
 }
