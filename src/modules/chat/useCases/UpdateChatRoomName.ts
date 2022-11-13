@@ -16,7 +16,7 @@ export class UpdateChatRoomName implements UseCase<Request, Promise<Response>> {
   }
 
   public async execute(request: Request): Promise<Response> {
-    const chatRoom = await this.chatRoomRepo.getChatRoomByChatRoomId(
+    const chatRoom = await this.chatRoomRepo.findChatRoomByChatRoomId(
       request.chatRoomId
     );
 
