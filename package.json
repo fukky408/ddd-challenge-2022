@@ -1,0 +1,15 @@
+{
+  "name": "ddd-challenge-2022",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:progriro/ddd-challenge-2022.git",
+  "author": "shinya fukimbara <progriro@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "@types/uuidv4": "^5.0.0",
+    "zod": "^3.19.1"
+  }
+}
