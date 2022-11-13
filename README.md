@@ -22,3 +22,8 @@
 | スケジュールコンテキスト | ScheduleContext | スケジュール | |
 
 ## Domain Model Diaglam
+
+## Note
+
+- コアドメイン：chat
+- サブドメイン: users
