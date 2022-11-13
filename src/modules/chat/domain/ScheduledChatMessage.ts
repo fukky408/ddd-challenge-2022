@@ -21,7 +21,7 @@ type ScheduledChatMessageProps = {
 /**
  * 送信予定のチャットメッセージ
  */
-class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
+export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public readonly id: UniqueID;
 
   constructor(props: ScheduledChatMessageProps, id?: string) {
