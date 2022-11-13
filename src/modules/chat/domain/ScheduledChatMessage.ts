@@ -3,6 +3,7 @@ import { UniqueID } from "../../../shared/domain/UniqueID";
 import { ScheduleStatus } from "./ScheduleStatus";
 
 type ScheduledChatMessageProps = {
+  id: UniqueID;
   body: string;
   /**
    * スケジュールのステータス
@@ -22,8 +23,6 @@ type ScheduledChatMessageProps = {
  * 送信予定のチャットメッセージ
  */
 class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
-  public readonly id: UniqueID;
-
   constructor(props: ScheduledChatMessageProps, id?: string) {
     super(props, id);
   }
