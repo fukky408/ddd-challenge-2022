@@ -1,11 +1,8 @@
-// chatコンテキストがあるなら，Userの別モデルとしてChatRoomMemberがあるのはわかる
-// けどmodulesは別にコンテキストで切っているわけではないはず
-// なので，ChatRoomMemberがここに来るのが正しいのか分かりません
-
 import { Entity } from "../../../shared/domain/Entity";
 
 type ChatRoomMemberProps = {
   name: string;
+  joinedAt?: Date;
 };
 
 export class ChatRoomMember extends Entity<ChatRoomMemberProps> {

@@ -4,6 +4,7 @@ import { ChatRoomMember } from "../domain/ChatRoomMember";
 type ChatRoomProps = {
   name: string;
   chatRoomMembers: ChatRoomMember[];
+  createdAt?: Date;
 };
 
 export class ChatRoom extends Entity<ChatRoomProps> {
@@ -16,11 +17,11 @@ export class ChatRoom extends Entity<ChatRoomProps> {
   }
 
   public changeName(newName: string) {
-    return new ChatRoom({ ...this.props, name: newName }, this.props.id.value);
+    return new ChatRoom({ ...this.props, name: newName });
   }
 
   public isMember(memberId: string) {
-    const chatRoomMemberIds = this.chatRoomMembers.map((c) => c.id);
+    const chatRoomMemberIds = this.chatRoomMembers.map((c) => c.id.value);
     return chatRoomMemberIds.includes(memberId);
   }
 }

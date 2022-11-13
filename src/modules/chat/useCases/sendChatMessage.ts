@@ -1,24 +1,16 @@
 import { ChatMessage } from "../domain/ChatMessage";
-import { ChatRoom } from "../domain/ChatRoom";
+import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
+import { IChatMessageRepo } from "../repositories/IChatMessageRepo";
 
 type SendChatMessageRequest = {
   body: string;
   senderId: string;
-  organizationId: string;
   chatRoomId: string;
+  // 必要?
   sendAt: Date;
 };
 
 type SendChatMessageResponse = {};
-
-interface IChatMessageRepo {
-  save(chatMessage: ChatMessage): Promise<void>;
-}
-
-interface IChatRoomRepo {
-  findById(id: string): Promise<ChatRoom | undefined>;
-  findByUserId(userId: string): Promise<ChatRoom[] | undefined>;
-}
 
 /**
  * チャットの所属メンバーにメッセージを送信する
@@ -39,7 +31,7 @@ export class SendChatMessage {
 
     if (!isChatRoomMember) {
       throw new Error(
-        `The sender doesn't join the chatRoom. chatRoomId=${chatRoom.id}`
+        `The sender doesn't join the chatRoom. chatRoomId=${request.chatRoomId}`
       );
     }
 
