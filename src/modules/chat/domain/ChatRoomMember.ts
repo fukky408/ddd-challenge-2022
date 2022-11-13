@@ -3,17 +3,13 @@
 // なので，ChatRoomMemberがここに来るのが正しいのか分かりません
 
 import { Entity } from "../../../shared/domain/Entity";
-import { UniqueID } from "../../../shared/domain/UniqueID";
 
-type ChatRoomProps = {
-  id: UniqueID;
+type ChatRoomMemberProps = {
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
 };
 
-export class ChatRoomMember extends Entity<ChatRoomProps> {
-  constructor(props: ChatRoomProps, id?: string) {
+export class ChatRoomMember extends Entity<ChatRoomMemberProps> {
+  constructor(props: ChatRoomMemberProps, id?: string) {
     super(props, id);
   }
 }
