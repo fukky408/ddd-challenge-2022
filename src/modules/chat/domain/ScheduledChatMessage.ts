@@ -21,6 +21,7 @@ type ScheduledChatMessageProps = {
    * スケジュールのステータス
    */
   userId: UniqueID;
+  chatId: UniqueID;
   scheduleStatus: ScheduleStatus;
   /**
    * 送信予定日
@@ -36,6 +37,7 @@ type ScheduledChatMessageProps = {
  */
 export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public readonly id: UniqueID;
+  public readonly userId: UniqueID;
 
   constructor(props: ScheduledChatMessageProps, id?: string) {
     super(props, id);
