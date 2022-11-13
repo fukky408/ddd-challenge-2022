@@ -2,6 +2,19 @@ import { Entity } from "../../../shared/domain/Entity";
 import { UniqueID } from "../../../shared/domain/UniqueID";
 import { ScheduleStatus } from "./ScheduleStatus";
 
+
+class PostScheduledAt {
+  public readonly date: Date
+
+  constructor(date: Date) {
+    const now = new Date()
+    if (date.getTime() < now.getTime()) {
+      throw 'PostScheduledAt must be future time.';
+    }
+    this.date = date
+  }
+}
+
 type ScheduledChatMessageProps = {
   body: string;
   /**
@@ -12,7 +25,7 @@ type ScheduledChatMessageProps = {
   /**
    * 送信予定日
    */
-  postScheduledAt: Date;
+  postScheduledAt: PostScheduledAt;
   // TODO: ここ何入れる?
   postedAt: Date;
   updatedAt: Date;
