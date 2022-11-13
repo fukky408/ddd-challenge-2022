@@ -18,4 +18,8 @@ export class ChatRoom extends Entity<ChatRoomProps> {
   constructor(props: ChatRoomProps, id?: string) {
     super(props, id);
   }
+
+  public changeName(newName: string) {
+    return new ChatRoom({ ...this.props, name: newName }, this.id.value);
+  }
 }
