@@ -16,7 +16,7 @@ export class UpdateUserName implements UseCase<Request, Promise<Response>> {
   }
 
   public async execute(request: Request): Promise<Response> {
-    const user = await this.userRepo.getUserByUserId(request.userId);
+    const user = await this.userRepo.findUserByUserId(request.userId);
 
     if (!user) {
       throw new Error("User not found");

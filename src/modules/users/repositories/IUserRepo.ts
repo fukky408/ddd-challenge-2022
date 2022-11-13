@@ -3,6 +3,6 @@ import { User } from "../domain/user";
 
 export type IUserRepo = {
   exists(userEmail: string): Promise<boolean>;
-  getUserByUserId(userId: string): Promise<User | null>;
+  findUserByUserId(userId: string): Promise<User | null>;
   save(user: User): Promise<void>;
 };
