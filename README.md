@@ -22,3 +22,13 @@
 | スケジュールコンテキスト | ScheduleContext | スケジュール | |
 
 ## Domain Model Diaglam
+
+## Note
+
+- コアドメイン：chat
+- サブドメイン: users
+
+## コードベース
+
+- prefix に`I`が付いている型は，インタフェースを表す
+  - 注： `interface`による型定義ではなく`type alias`を利用しているのは，技術的な優位による選択です

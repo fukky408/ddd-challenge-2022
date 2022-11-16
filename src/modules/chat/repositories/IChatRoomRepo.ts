@@ -1,6 +1,7 @@
 import { ChatRoom } from "../domain/ChatRoom";
 
 export type IChatRoomRepo = {
-  findChatRoomByChatRoomId(chatRoomId: string): Promise<ChatRoom | null>;
-  save(chatRoom: ChatRoom): Promise<void>;
+  save(chatRoom: ChatRoom): Promise<boolean>;
+  findById(id: string): Promise<ChatRoom | undefined>;
+  findByUserId(userId: string): Promise<ChatRoom[] | undefined>;
 };

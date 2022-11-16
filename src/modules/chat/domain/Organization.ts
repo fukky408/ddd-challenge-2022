@@ -5,8 +5,7 @@ import { UniqueID } from "../../../shared/domain/UniqueID";
 type OrganizationProps = {
   id: UniqueID;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
 };
 
 export class Organization extends Entity<OrganizationProps> {
