@@ -1,5 +1,4 @@
-import { User } from "../domain/user";
-// import { UserEmail } from "../domain/userEmail";
+import { User } from "../domain/User";
 
 export type IUserRepo = {
   exists(userEmail: string): Promise<boolean>;
