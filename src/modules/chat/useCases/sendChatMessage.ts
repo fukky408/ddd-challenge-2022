@@ -6,7 +6,6 @@ type SendChatMessageRequest = {
   body: string;
   senderId: string;
   chatRoomId: string;
-  // 必要?
   sendAt: Date;
 };
 
@@ -25,13 +24,16 @@ export class SendChatMessage {
   async execute(
     request: SendChatMessageRequest
   ): Promise<SendChatMessageResponse> {
-    // ChatRoomの所属チェック
     const chatRoom = await this.chatRoomRepo.findById(request.chatRoomId);
+    if (!chatRoom) {
+      throw new Error(
+        `The chatRoom (chatRoomId=${request.chatRoomId}) not found.`
+      );
+    }
     const isChatRoomMember = chatRoom.isMember(request.senderId);
-
     if (!isChatRoomMember) {
       throw new Error(
-        `The sender doesn't join the chatRoom. chatRoomId=${request.chatRoomId}`
+        `The sender does not join the chatRoom (chatRoomId=${request.chatRoomId}).`
       );
     }
 
