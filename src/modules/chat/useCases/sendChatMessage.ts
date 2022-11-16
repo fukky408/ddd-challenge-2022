@@ -1,6 +1,7 @@
 import { ChatMessage } from "../domain/ChatMessage";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IChatMessageRepo } from "../repositories/IChatMessageRepo";
+import { UseCase } from "../../../shared/core/UseCase";
 
 type SendChatMessageRequest = {
   body: string;
@@ -9,19 +10,21 @@ type SendChatMessageRequest = {
   sendAt: Date;
 };
 
-type SendChatMessageResponse = {};
+type SendChatMessageResponse = ChatMessage;
 
 /**
  * チャットの所属メンバーにメッセージを送信する
  */
-export class SendChatMessage {
+export class SendChatMessage
+  implements UseCase<SendChatMessageRequest, Promise<SendChatMessageResponse>>
+{
   constructor(
     private chatRoomRepo: IChatRoomRepo,
     private chatMessageRepo: IChatMessageRepo
   ) {}
 
   // TODO: 外部にバリデーション追加 & リポジトリなどに渡す値をVOなどに変更
-  async execute(
+  public async execute(
     request: SendChatMessageRequest
   ): Promise<SendChatMessageResponse> {
     const chatRoom = await this.chatRoomRepo.findById(request.chatRoomId);

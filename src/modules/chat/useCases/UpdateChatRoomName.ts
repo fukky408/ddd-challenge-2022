@@ -6,26 +6,21 @@ type Request = {
   chatRoomName: string;
 };
 
-type Response = void;
+type Response = boolean;
 
 export class UpdateChatRoomName implements UseCase<Request, Promise<Response>> {
-  private chatRoomRepo: IChatRoomRepo;
-
-  constructor(chatRoomRepo: IChatRoomRepo) {
-    this.chatRoomRepo = chatRoomRepo;
-  }
+  constructor(private chatRoomRepo: IChatRoomRepo) {}
 
   public async execute(request: Request): Promise<Response> {
-    const chatRoom = await this.chatRoomRepo.findChatRoomByChatRoomId(
-      request.chatRoomId
-    );
-
+    const chatRoom = await this.chatRoomRepo.findById(request.chatRoomId);
     if (!chatRoom) {
-      throw new Error("ChatRoom not found");
+      throw new Error(
+        `The chatRoom (chatRoomId=${request.chatRoomId}) not found.`
+      );
     }
 
     chatRoom.changeName(request.chatRoomName);
-
-    await this.chatRoomRepo.save(chatRoom);
+    const res = await this.chatRoomRepo.save(chatRoom);
+    return res;
   }
 }
