@@ -3,7 +3,6 @@ import { UniqueID } from "../../../shared/domain/UniqueID";
 import { ScheduleStatus } from "./ScheduleStatus";
 
 type ScheduledChatMessageProps = {
-  id: UniqueID;
   body: string;
   userId: UniqueID;
   scheduleStatus: ScheduleStatus;

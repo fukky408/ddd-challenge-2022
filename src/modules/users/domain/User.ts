@@ -1,8 +1,6 @@
 import { Entity } from "../../../shared/domain/Entity";
-import { UniqueID } from "../../../shared/domain/UniqueID";
 
 type UserProps = {
-  id: UniqueID;
   name: string;
   email: string;
   password: string;
