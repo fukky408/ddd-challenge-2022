@@ -485,6 +485,11 @@ nanoid@^3.3.4:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
+nominal-types@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/nominal-types/-/nominal-types-0.1.2.tgz#052d139e75bc3f6b1451337334654b50dafb010b"
+  integrity sha512-bTYbsGkvyqrbxAgUYQpIyRp/EsdPCC1rOwOqRg2/adUjX1Ja9+TRwnZUwkKYQnqXhsgCDfHS+kWj/wt5F5LC2Q==
+
 on-exit-leak-free@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/on-exit-leak-free/-/on-exit-leak-free-2.1.0.tgz#5c703c968f7e7f851885f6459bf8a8a57edc9cc4"

@@ -5,7 +5,7 @@ const isEntity = (v: any): v is Entity<any> => {
 };
 
 export abstract class Entity<T> {
-  protected readonly _id: UniqueID;
+  private readonly _id: UniqueID;
   private readonly _props: T;
 
   get id() {
