@@ -31,4 +31,17 @@ export class ChatRoom extends Entity<ChatRoomProps> {
     const chatRoomMemberIds = this.chatRoomMembers.map((c) => c.id.value);
     return chatRoomMemberIds.includes(memberId);
   }
+
+  public addChatRoomMember(chatRoomMember: ChatRoomMember) {
+    const updated = [...this.chatRoomMembers, chatRoomMember];
+    return new ChatRoom({ ...this.props, chatRoomMembers: updated });
+  }
+
+  // Q: interfaceを合わせて，chatRoomMemberを渡すようにしたほうが良い？
+  public removeChatMember(memberId: ChatRoomMemberId) {
+    const filtered = this.chatRoomMembers.filter(
+      (m) => m.chatRoomMemberId !== memberId
+    );
+    return new ChatRoom({ ...this.props, chatRoomMembers: filtered });
+  }
 }
