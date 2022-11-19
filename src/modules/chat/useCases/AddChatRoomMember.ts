@@ -5,6 +5,7 @@ import { ChatRoomMember } from "../domain/ChatRoomMember";
 
 type Request = {
   userId: string;
+  roleKind: "MEMBER" | "OWNER";
   chatRoomId: string;
   chatRoomName: string;
 };
@@ -36,6 +37,7 @@ export class AddChatRoomMember implements UseCase<Request, Promise<Response>> {
     const chatRoomMember = new ChatRoomMember({
       name: user.name,
       userId: user.userId,
+      roleKind: request.roleKind,
     });
 
     const updatedChatRoom = chatRoom.addChatRoomMember(chatRoomMember);

@@ -6,6 +6,7 @@ import { UserName } from "../../users/domain/UserName";
 type ChatRoomMemberProps = {
   name: UserName;
   userId: UserId;
+  roleKind: "MEMBER" | "OWNER";
   joinedAt?: Date;
 };
 
@@ -18,5 +19,9 @@ export class ChatRoomMember extends Entity<ChatRoomMemberProps> {
 
   get chatRoomMemberId(): ChatRoomMemberId {
     return nominal.make<ChatRoomMemberId>(this.id.value);
+  }
+
+  public changeRoleKind(roleKind: "MEMBER" | "OWNER") {
+    return new ChatRoomMember({ ...this.props, roleKind });
   }
 }
