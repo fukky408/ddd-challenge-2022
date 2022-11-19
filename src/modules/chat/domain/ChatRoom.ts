@@ -1,5 +1,6 @@
 import { Entity } from "../../../shared/domain/Entity";
-import { ChatRoomMember } from "../domain/ChatRoomMember";
+import { ChatRoomMember, ChatRoomMemberId } from "../domain/ChatRoomMember";
+import { Nominal, nominal } from "nominal-types";
 
 type ChatRoomProps = {
   name: string;
@@ -7,9 +8,15 @@ type ChatRoomProps = {
   createdAt?: Date;
 };
 
+export type ChatRoomId = Nominal<"ChatRoomId", string>;
+
 export class ChatRoom extends Entity<ChatRoomProps> {
   constructor(props: ChatRoomProps, id?: string) {
     super(props, id);
+  }
+
+  get chatRoomId(): ChatRoomId {
+    return nominal.make<ChatRoomId>(this.id.value);
   }
 
   get chatRoomMembers() {
