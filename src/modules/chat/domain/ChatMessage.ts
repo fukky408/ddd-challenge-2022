@@ -13,10 +13,6 @@ export class ChatMessage extends Entity<ChatMessageProps> {
     super(props, id);
   }
 
-  static create(props: ChatMessageProps, id?: string) {
-    return new ChatMessage(props, id);
-  }
-
   get body() {
     return this.props.body;
   }
