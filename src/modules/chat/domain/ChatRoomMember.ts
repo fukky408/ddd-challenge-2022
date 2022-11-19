@@ -1,9 +1,10 @@
 import { nominal, Nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
 import { UserId } from "../../users/domain/User";
+import { UserName } from "../../users/domain/UserName";
 
 type ChatRoomMemberProps = {
-  name: string;
+  name: UserName;
   userId: UserId;
   joinedAt?: Date;
 };
