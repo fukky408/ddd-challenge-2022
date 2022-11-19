@@ -1,8 +1,9 @@
 import { Nominal, nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
+import { UserName } from "./UserName";
 
 type UserProps = {
-  name: string;
+  name: UserName;
   email: string;
   password: string;
   role: string;
@@ -21,26 +22,23 @@ export class User extends Entity<UserProps> {
     return nominal.make<UserId>(this.id.value);
   }
 
-  get name() {
+  get name(): UserName {
     return this.props.name;
   }
 
-  public changeName(newName: string) {
-    return new User({ ...this.props, name: newName }, this.props.id.value);
+  public changeName(newName: UserName) {
+    return new User({ ...this.props, name: newName }, this.userId);
   }
 
   public changeEmail(newEmail: string) {
-    return new User({ ...this.props, email: newEmail }, this.props.id.value);
+    return new User({ ...this.props, email: newEmail }, this.userId);
   }
 
   public changePassword(newPassword: string) {
-    return new User(
-      { ...this.props, password: newPassword },
-      this.props.id.value
-    );
+    return new User({ ...this.props, password: newPassword }, this.userId);
   }
 
   public changeRole(newRole: string) {
-    return new User({ ...this.props, role: newRole }, this.props.id.value);
+    return new User({ ...this.props, role: newRole }, this.userId);
   }
 }
