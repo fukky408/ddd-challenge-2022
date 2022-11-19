@@ -19,8 +19,8 @@ export class UpdateChatRoomName implements UseCase<Request, Promise<Response>> {
       );
     }
 
-    chatRoom.changeName(request.chatRoomName);
-    const res = await this.chatRoomRepo.save(chatRoom);
+    const updatedChatRoom = chatRoom.changeName(request.chatRoomName);
+    const res = await this.chatRoomRepo.save(updatedChatRoom);
     return res;
   }
 }
