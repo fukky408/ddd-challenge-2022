@@ -5,6 +5,7 @@ const fastify = Fastify({
   logger: true,
 });
 
+// use middleware to auth or something
 const middleware = new Middleware();
 
 fastify.get(
