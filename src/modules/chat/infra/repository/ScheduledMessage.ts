@@ -8,9 +8,9 @@ export class ScheduledChatMessageRepoImple {
     messages.push(msg);
   }
 
-  public async get(id: string): Promise<ScheduledChatMessage | undefined> {
+  public async get(id: UniqueID): Promise<ScheduledChatMessage | undefined> {
     const msg = messages.find((message: ScheduledChatMessage) => {
-      return message.id.value === id;
+      return id.equals(message.id);
     });
     if (!msg) {
       throw new Error("scheduled chat message is not found.");
@@ -19,11 +19,11 @@ export class ScheduledChatMessageRepoImple {
   }
 
   public async update(msg: ScheduledChatMessage): Promise<boolean> {
-    if (!this.exist(msg.id.value)) {
+    if (!this.exist(msg.id)) {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.map((message) => {
-      if (message.id === msg.id) {
+      if (msg.id.equals(message.id)) {
         return msg;
       }
       return message;
@@ -32,18 +32,18 @@ export class ScheduledChatMessageRepoImple {
   }
 
   public async delete(id: UniqueID): Promise<boolean> {
-    if (!this.exist(id.value)) {
+    if (!this.exist(id)) {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.filter((message) => {
-      return message.id !== id;
+      return id.equals(message.id);
     });
     return true;
   }
 
-  exist(id: string): boolean {
+  private exist(id: UniqueID): boolean {
     const msg = messages.find((message: ScheduledChatMessage) => {
-      return message.id.value === id;
+      return id.equals(message.id);
     });
     return !!msg;
   }
