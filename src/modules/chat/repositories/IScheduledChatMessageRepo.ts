@@ -5,4 +5,5 @@ export interface IScheduledChatMessageRepo {
   findById(id: string): Promise<ScheduledChatMessage | undefined>;
   update(msg: ScheduledChatMessage): Promise<boolean>;
   delete(id: string): Promise<boolean>;
+  findOverScheduledTime(scheduledAt: Date): Promise<ScheduledChatMessage[]>
 }

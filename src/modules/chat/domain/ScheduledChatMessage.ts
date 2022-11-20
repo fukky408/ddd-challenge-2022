@@ -30,6 +30,14 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
     return this.senderId;
   }
 
+  get body(): string {
+    return this.body;
+  }
+
+  get postScheduledAt(): Date {
+    return this.postScheduledAt
+  }
+
   public changeChatRoomId(chatRoomId: ChatRoomId) {
     return new ScheduledChatMessage({ ...this.props, chatRoomId });
   }
