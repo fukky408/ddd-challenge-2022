@@ -10,7 +10,7 @@ import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessage
 
 type Request = {
   body: string;
-  senderId: string;
+  userId: string;
   chatRoomId: ChatRoomId;
   postScheduledAt: Date;
 };
@@ -30,12 +30,12 @@ export class CreateScheduledMessage
     if (!chatRoom) {
       throw new Error(`chatRoomId=${request.chatRoomId}) not found.`);
     }
-    if (!chatRoom.isMember(request.senderId)) {
-      throw new Error("member not include in chatroom");
+    if (!chatRoom.isMember(request.userId)) {
+      throw new Error(`${request.userId}`);
     }
     const msg = new ScheduledChatMessage({
       body: request.body,
-      senderId: request.senderId,
+      senderId: request.userId,
       chatRoomId: request.chatRoomId,
       scheduleStatus: new ScheduleStatus(ScheduleStatusCandidate.SCHEDULED),
       postScheduledAt: request.postScheduledAt,
