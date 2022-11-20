@@ -4,10 +4,9 @@ import { IChatMessageRepo } from "../repositories/IChatMessageRepo";
 import { UseCase } from "../../../shared/core/UseCase";
 
 type SendChatMessageRequest = {
+  userId: string;
   body: string;
-  senderId: string;
   chatRoomId: string;
-  sendAt: Date;
 };
 
 type SendChatMessageResponse = ChatMessage;
@@ -29,15 +28,11 @@ export class SendChatMessage
   ): Promise<SendChatMessageResponse> {
     const chatRoom = await this.chatRoomRepo.findById(request.chatRoomId);
     if (!chatRoom) {
-      throw new Error(
-        `The chatRoom (chatRoomId=${request.chatRoomId}) not found.`
-      );
+      throw new Error(`chatRoomId=${request.chatRoomId}) not found.`);
     }
-    const isChatRoomMember = chatRoom.isMember(request.senderId);
-    if (!isChatRoomMember) {
-      throw new Error(
-        `The sender does not join the chatRoom (chatRoomId=${request.chatRoomId}).`
-      );
+    const memberExists = chatRoom.isMember(request.userId);
+    if (!memberExists) {
+      throw new Error(`chatRoomId=${request.chatRoomId}) `);
     }
 
     const chatMessage = new ChatMessage(request);

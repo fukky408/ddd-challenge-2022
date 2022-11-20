@@ -26,7 +26,7 @@ export class AddChatRoomMember implements UseCase<Request, Promise<Response>> {
 
     const user = await this.userRepo.findUserById(request.userId);
     if (!user) {
-      throw new Error(`userId=${request.userId} not found)`);
+      throw new Error(`userId=${request.userId} not found.)`);
     }
 
     const memberExists = chatRoom.isMember(user.userId);

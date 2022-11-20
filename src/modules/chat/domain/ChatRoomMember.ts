@@ -7,7 +7,6 @@ type ChatRoomMemberProps = {
   name: UserName;
   userId: UserId;
   roleKind: "MEMBER" | "OWNER";
-  joinedAt?: Date;
 };
 
 export type ChatRoomMemberId = Nominal<"ChatRoomMemberId", string>;
