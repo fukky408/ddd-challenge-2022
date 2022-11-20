@@ -9,20 +9,26 @@ type Request = {
 
 type Response = boolean;
 
-export class DeleteScheduledMessage implements UseCase<Request, Promise<Response>> {
-  constructor(
-    private scheduledChatMessageRepo: IScheduledChatMessageRepo
-  ) { }
+export class DeleteScheduledMessage
+  implements UseCase<Request, Promise<Response>>
+{
+  constructor(private scheduledChatMessageRepo: IScheduledChatMessageRepo) {}
 
   public async execute(request: Request): Promise<Response> {
-    const msg = await this.scheduledChatMessageRepo.findById(request.scheduledMessageId)
+    const msg = await this.scheduledChatMessageRepo.findById(
+      request.scheduledMessageId
+    );
     if (!msg) {
-      throw new Error(`scheduledMessageId=${request.scheduledMessageId}) not found.`);
+      throw new Error(
+        `scheduledMessageId=${request.scheduledMessageId}) not found.`
+      );
     }
     if (!(msg.chatRoomMemberId === request.chatRoomMemberId)) {
-      throw `request userId=${request.chatRoomMemberId} is not match to scheduled message userId=${msg.chatRoomMemberId}`
+      throw new Error(
+        `chatRoomMemberId=${request.chatRoomMemberId} does not match to scheduled message chatRoomMemberId=${msg.chatRoomMemberId}`
+      );
     }
-    const res = await this.scheduledChatMessageRepo.delete(msg.id.value)
-    return res
+    const res = await this.scheduledChatMessageRepo.delete(msg.id.value);
+    return res;
   }
 }
