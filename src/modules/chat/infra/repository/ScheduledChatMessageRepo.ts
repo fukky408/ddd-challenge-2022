@@ -1,5 +1,6 @@
 import { ScheduledChatMessage } from "../../domain/ScheduledChatMessage";
 import { UniqueID } from "../../../../shared/domain/UniqueID";
+import { ChatRoomMemberId } from "../../domain/ChatRoomMember";
 
 let messages: ScheduledChatMessage[] = [];
 
@@ -17,6 +18,12 @@ export class ScheduledChatMessageRepo {
       throw new Error("scheduled chat message is not found.");
     }
     return msg;
+  }
+
+  public async findByMemberId(memberId: ChatRoomMemberId): Promise<ScheduledChatMessage[]> {
+    return messages.filter((message: ScheduledChatMessage) => {
+      return message.chatRoomMemberId === memberId;
+    });
   }
 
   public async update(msg: ScheduledChatMessage): Promise<boolean> {
