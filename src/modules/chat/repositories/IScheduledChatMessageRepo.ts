@@ -1,5 +1,4 @@
-import { ScheduledChatMessage } from "../domain/ScheduledChatMessage"
-import { UniqueID } from "../../../shared/domain/UniqueID";
+import { ScheduledChatMessage } from "../domain/ScheduledChatMessage";
 
 export interface IScheduledChatMessageRepo {
   save(msg: ScheduledChatMessage): Promise<boolean>;
