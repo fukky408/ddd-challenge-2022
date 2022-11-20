@@ -5,6 +5,10 @@
   "repository": "git@github.com:progriro/ddd-challenge-2022.git",
   "author": "shinya fukimbara <progriro@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "rome:check": "npx rome check .",
+    "rome:format": "npx rome format ."
+  },
   "dependencies": {
     "fastify": "^4.9.2",
     "uuidv4": "^6.2.13"
@@ -13,6 +17,7 @@
     "@tsconfig/recommended": "^1.0.1",
     "@types/uuidv4": "^5.0.0",
     "nominal-types": "^0.1.2",
+    "rome": "^10.0.1",
     "vitest": "^0.25.1",
     "zod": "^3.19.1"
   }
