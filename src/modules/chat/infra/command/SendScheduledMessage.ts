@@ -1,9 +1,11 @@
 import { SendChatMessage } from "../../useCases/sendChatMessage"
 import { GetShouldScheduledMessage } from "../../useCases/GetShouldScheduledMessage"
+import { UpdateStatusSentScheduledMessage } from "../../useCases/UpdateStatusSentScheduledMessage"
 
 export class SendScheduledMessage {
   constructor(
     private getShouldScheduledMessage: GetShouldScheduledMessage,
+    private updateStatusSentScheduledMessage: UpdateStatusSentScheduledMessage,
     private sendChatMessage: SendChatMessage,
   ) { }
 
@@ -17,6 +19,9 @@ export class SendScheduledMessage {
         sendAt: smsg.postScheduledAt,
       }
       await this.sendChatMessage.execute(msg)
+      await this.updateStatusSentScheduledMessage.execute({
+        scheduledMessageId: smsg.id.value
+      })
     }
   }
 

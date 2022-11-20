@@ -47,4 +47,8 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public changePostScheduledAt(postScheduledAt: Date) {
     return new ScheduledChatMessage({ ...this.props, postScheduledAt });
   }
+
+  public changeScheduleStatus(status: ScheduleStatus) {
+    return new ScheduledChatMessage({...this.props, scheduleStatus: status})
+  }
 }
