@@ -1,7 +1,8 @@
-import { ChatRoom } from "../domain/ChatRoom";
+import { ChatRoom, ChatRoomId } from "../domain/ChatRoom";
+import { ChatRoomMemberId } from "../domain/ChatRoomMember";
 
 export type IChatRoomRepo = {
   save(chatRoom: ChatRoom): Promise<boolean>;
-  findById(id: string): Promise<ChatRoom | undefined>;
-  findByUserId(userId: string): Promise<ChatRoom[] | undefined>;
+  findById(id: ChatRoomId): Promise<ChatRoom | undefined>;
+  findByMemberId(memberId: ChatRoomMemberId): Promise<ChatRoom[] | undefined>;
 };

@@ -14,7 +14,7 @@ export class SendScheduledMessage {
     for (const smsg of smsgs) {
       const msg = {
         body: smsg.body,
-        senderId: smsg.senderId,
+        chatRoomMemberId: smsg.chatRoomMemberId,
         chatRoomId: smsg.chatRoomId,
         sendAt: smsg.postScheduledAt,
       }

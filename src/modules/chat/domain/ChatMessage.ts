@@ -1,9 +1,11 @@
 import { Entity } from "../../../shared/domain/Entity";
+import { ChatRoomId } from "./ChatRoom";
+import { ChatRoomMemberId } from "./ChatRoomMember";
 
 type ChatMessageProps = {
   body: string;
-  senderId: string;
-  chatRoomId: string;
+  chatRoomMemberId: ChatRoomMemberId;
+  chatRoomId: ChatRoomId;
   createdAt?: Date;
   updatedAt?: Date;
 };

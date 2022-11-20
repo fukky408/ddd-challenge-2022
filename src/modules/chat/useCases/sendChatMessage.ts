@@ -2,11 +2,13 @@ import { ChatMessage } from "../domain/ChatMessage";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IChatMessageRepo } from "../repositories/IChatMessageRepo";
 import { UseCase } from "../../../shared/core/UseCase";
+import { ChatRoomId } from "../domain/ChatRoom";
+import { ChatRoomMemberId } from "../domain/ChatRoomMember";
 
 type SendChatMessageRequest = {
   body: string;
-  senderId: string;
-  chatRoomId: string;
+  chatRoomMemberId: ChatRoomMemberId;
+  chatRoomId: ChatRoomId;
   sendAt: Date;
 };
 
@@ -33,14 +35,18 @@ export class SendChatMessage
         `The chatRoom (chatRoomId=${request.chatRoomId}) not found.`
       );
     }
-    const isChatRoomMember = chatRoom.isMember(request.senderId);
+    const isChatRoomMember = chatRoom.isMember(request.chatRoomMemberId);
     if (!isChatRoomMember) {
       throw new Error(
         `The sender does not join the chatRoom (chatRoomId=${request.chatRoomId}).`
       );
     }
 
-    const chatMessage = new ChatMessage(request);
+    const chatMessage = new ChatMessage({
+      body: request.body,
+      chatRoomMemberId: request.chatRoomMemberId,
+      chatRoomId: request.chatRoomId,
+    });
 
     await this.chatMessageRepo.save(chatMessage);
     return chatMessage;
