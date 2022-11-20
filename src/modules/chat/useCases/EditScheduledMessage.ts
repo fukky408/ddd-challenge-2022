@@ -1,13 +1,14 @@
 import { UseCase } from "../../../shared/core/UseCase";
 import { ChatRoomId } from "../domain/ChatRoom";
+import { MessageBody } from "../domain/MessageBody";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo";
 
 type Request = {
   scheduledMessageId: string;
-  body: string;
+  body: MessageBody;
   chatRoomId: ChatRoomId;
-  postScheduledAt: Date;
+  sendScheduledAt: Date;
 };
 
 type Response = boolean;
@@ -40,7 +41,7 @@ export class EditScheduledMessage
     const updateMsg = msg
       .changeBody(request.body)
       .changeChatRoomId(request.chatRoomId)
-      .changePostScheduledAt(request.postScheduledAt);
+      .changePostScheduledAt(request.sendScheduledAt);
 
     const res = await this.scheduledChatMessageRepo.update(updateMsg);
     return res;

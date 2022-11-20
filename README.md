@@ -13,11 +13,17 @@
 | 送信予定のチャットメッセージ | ScheduledChatMessage                            | 送信予定時刻が設定されたチャットメッセージのこと．                                                                               |
 | 送信予定時刻                 | ScheduledPostAt | 送信予定のチャットメッセージが実際に送信される予定の時刻                                                                         |         
 | オーガナイゼーション         | Organization                                    | ユーザーが所属する組織．                                                                                                         | 
-| オーガナイゼーションメンバー         | OrganizationMember                                   | オーガナイゼーションに所属するメンバー。ユーザーに限らず、ボットやゲストユーザーなども将来的に該当する。                    |              
+| オーガナイゼーションメンバー         | OrganizationMember                                   | オーガナイゼーションに所属するメンバー。ユーザーに限らず、ボットやゲストユーザーなども将来的に該当する。                    |    
 
 ## Domain Model Diaglam
 
-![](./model.png)
+![domein-model-diagram](https://user-images.githubusercontent.com/38400669/202908773-2582f38f-4c83-4365-9971-97a106b1b0bc.png)
+
+## UseCase Diaglam
+
+| current                                                                                                                         | future                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/38400669/202908773-2582f38f-4c83-4365-9971-97a106b1b0bc.png" width="400px"> | <img src="https://user-images.githubusercontent.com/38400669/202908773-2582f38f-4c83-4365-9971-97a106b1b0bc.png" width="400px"> |
 
 ## Note
 

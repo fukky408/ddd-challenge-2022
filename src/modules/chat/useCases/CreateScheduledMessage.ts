@@ -6,14 +6,15 @@ import {
   ScheduleStatus,
   ScheduleStatusCandidate,
 } from "../domain/ScheduleStatus";
+import { MessageBody } from "../domain/MessageBody";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo";
 
 type Request = {
-  body: string;
+  body: MessageBody;
   chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
-  postScheduledAt: Date;
+  sendScheduledAt: Date;
 };
 
 type Response = boolean;
@@ -39,7 +40,7 @@ export class CreateScheduledMessage
       chatRoomMemberId: request.chatRoomMemberId,
       chatRoomId: request.chatRoomId,
       scheduleStatus: new ScheduleStatus(ScheduleStatusCandidate.SCHEDULED),
-      postScheduledAt: request.postScheduledAt,
+      sendScheduledAt: request.sendScheduledAt,
     });
     const res = await this.scheduledChatMessageRepo.save(msg);
     return res;

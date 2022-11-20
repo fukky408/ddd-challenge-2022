@@ -5,14 +5,16 @@ import { ChatRoomMemberId } from "../../domain/ChatRoomMember";
 let messages: ScheduledChatMessage[] = [];
 
 export class ScheduledChatMessageRepo {
-  public async save(msg: ScheduledChatMessage): Promise<boolean > {
+  public async save(msg: ScheduledChatMessage): Promise<boolean> {
     messages.push(msg);
-    return true
+    return true;
   }
 
-  public async findById(id: string): Promise<ScheduledChatMessage | undefined> {
+  public async findById(
+    id: UniqueID
+  ): Promise<ScheduledChatMessage | undefined> {
     const msg = messages.find((message: ScheduledChatMessage) => {
-      return message.id.value === id;
+      return id.equals(message.id);
     });
     if (!msg) {
       throw new Error("scheduled chat message is not found.");
@@ -20,18 +22,20 @@ export class ScheduledChatMessageRepo {
     return msg;
   }
 
-  public async findByMemberId(memberId: ChatRoomMemberId): Promise<ScheduledChatMessage[]> {
+  public async findByMemberId(
+    memberId: ChatRoomMemberId
+  ): Promise<ScheduledChatMessage[]> {
     return messages.filter((message: ScheduledChatMessage) => {
       return message.chatRoomMemberId === memberId;
     });
   }
 
   public async update(msg: ScheduledChatMessage): Promise<boolean> {
-    if (!this.exist(msg.id.value)) {
+    if (!this.exist(msg.id)) {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.map((message) => {
-      if (message.id === msg.id) {
+      if (msg.id.equals(message.id)) {
         return msg;
       }
       return message;
@@ -39,26 +43,28 @@ export class ScheduledChatMessageRepo {
     return true;
   }
 
-  public async delete(id: string): Promise<boolean> {
+  public async delete(id: UniqueID): Promise<boolean> {
     if (!this.exist(id)) {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.filter((message) => {
-      return message.id.value != id;
+      return id.equals(message.id);
     });
     return true;
   }
 
-  public async findOverScheduledTime(scheduledAt: Date): Promise<ScheduledChatMessage[]> {
+  public async findOverScheduledTime(
+    scheduledAt: Date
+  ): Promise<ScheduledChatMessage[]> {
     const msgs = messages.filter((message: ScheduledChatMessage) => {
-      return message.postScheduledAt > scheduledAt
+      return message.sendScheduledAt > scheduledAt;
     });
-    return msgs
+    return msgs;
   }
 
-  exist(id: string): boolean {
+  private exist(id: UniqueID): boolean {
     const msg = messages.find((message: ScheduledChatMessage) => {
-      return message.id.value === id;
+      return id.equals(message.id);
     });
     return !!msg;
   }
