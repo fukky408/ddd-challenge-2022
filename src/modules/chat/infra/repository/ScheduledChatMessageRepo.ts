@@ -3,12 +3,13 @@ import { UniqueID } from "../../../../shared/domain/UniqueID";
 
 let messages: ScheduledChatMessage[] = [];
 
-export class ScheduledChatMessageRepoImple {
-  public async save(msg: ScheduledChatMessage) {
+export class ScheduledChatMessageRepo {
+  public async save(msg: ScheduledChatMessage): Promise<boolean > {
     messages.push(msg);
+    return true
   }
 
-  public async get(id: string): Promise<ScheduledChatMessage | undefined> {
+  public async findById(id: string): Promise<ScheduledChatMessage | undefined> {
     const msg = messages.find((message: ScheduledChatMessage) => {
       return message.id.value === id;
     });
@@ -31,14 +32,21 @@ export class ScheduledChatMessageRepoImple {
     return true;
   }
 
-  public async delete(id: UniqueID): Promise<boolean> {
-    if (!this.exist(id.value)) {
+  public async delete(id: string): Promise<boolean> {
+    if (!this.exist(id)) {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.filter((message) => {
-      return message.id != id;
+      return message.id.value != id;
     });
     return true;
+  }
+
+  public async findOverScheduledTime(scheduledAt: Date): Promise<ScheduledChatMessage[]> {
+    const msgs = messages.filter((message: ScheduledChatMessage) => {
+      return message.postScheduledAt > scheduledAt
+    });
+    return msgs
   }
 
   exist(id: string): boolean {
