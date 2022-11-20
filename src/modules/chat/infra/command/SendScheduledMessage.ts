@@ -1,6 +1,7 @@
 import { SendChatMessage } from "../../useCases/sendChatMessage";
 import { GetShouldScheduledMessage } from "../../useCases/GetShouldScheduledMessage";
 import { UpdateStatusSentScheduledMessage } from "../../useCases/UpdateStatusSentScheduledMessage";
+import { MessageBody } from "../../domain/MessageBody";
 
 export class SendScheduledMessage {
   constructor(
@@ -13,7 +14,7 @@ export class SendScheduledMessage {
     const smsgs = await this.getShouldScheduledMessage.execute();
     for (const smsg of smsgs) {
       const msg = {
-        body: smsg.body,
+        body: new MessageBody(smsg.body),
         chatRoomMemberId: smsg.chatRoomMemberId,
         chatRoomId: smsg.chatRoomId,
         sendAt: smsg.sendScheduledAt,
