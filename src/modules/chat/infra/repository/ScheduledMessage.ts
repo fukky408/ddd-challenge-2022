@@ -4,18 +4,22 @@ import { UniqueID } from "../../../../shared/domain/UniqueID";
 let messages: ScheduledChatMessage[] = []
 
 export class ScheduledChatMessageRepoImple {
-  save(msg: ScheduledChatMessage) {
+  public async save(msg: ScheduledChatMessage) {
     messages.push(msg)
   }
-  get(id: UniqueID): ScheduledChatMessage {
-    const msg = messages.find(message => message.id === id)
+
+  public async get(id: string): Promise<ScheduledChatMessage | undefined>{
+    const msg = messages.find((message: ScheduledChatMessage) => {
+      return message.id.value === id
+    })
     if (!msg) {
       throw "scheduled chat message is not found."
     }
     return msg
-  }
-  update(msg: ScheduledChatMessage) {
-    if (!this.exist(msg.id)) {
+}
+
+  public async update(msg: ScheduledChatMessage): Promise<boolean> {
+    if (!this.exist(msg.id.value)) {
       throw "scheduled chat message is not found."
     }
     messages = messages.map(message => {
@@ -24,20 +28,23 @@ export class ScheduledChatMessageRepoImple {
       }
       return message
     })
+    return true
   }
 
-  delete(id: UniqueID) {
-    if (!this.exist(id)) {
+  public async delete(id: UniqueID): Promise<boolean> {
+    if (!this.exist(id.value)) {
       throw "scheduled chat message is not found."
     }
     messages = messages.filter(message => {
       return message.id != id
     })
+    return true
   }
 
-  exist(id: UniqueID): boolean {
-    const msg = messages.find(message => message.id === id)
+  exist(id: string): boolean {
+    const msg = messages.find((message: ScheduledChatMessage) => {
+      return message.id.value === id
+    })
     return !!msg
   }
-
 }
