@@ -1,5 +1,4 @@
-import { UniqueID } from "../../../../shared/domain/UniqueID";
-import { ChatMessage } from "../../domain/ChatMessage";
+import { ChatMessage, ChatMessageId } from "../../domain/ChatMessage";
 import { ChatRoomMemberId } from "../../domain/ChatRoomMember";
 import { IChatMessageRepo } from "../../repositories/IChatMessageRepo";
 
@@ -10,9 +9,11 @@ export class ChatMessageRepo implements IChatMessageRepo {
     messages.push(msg);
   }
 
-  public async findById(id: UniqueID): Promise<ChatMessage | undefined> {
+  public async findById(
+    chatMessageId: ChatMessageId
+  ): Promise<ChatMessage | undefined> {
     const msg = messages.find((message: ChatMessage) => {
-      return id.equals(message.id);
+      return message.id.value === chatMessageId;
     });
     if (!msg) {
       throw new Error("chat message is not found.");
@@ -30,7 +31,7 @@ export class ChatMessageRepo implements IChatMessageRepo {
   }
 
   public async update(msg: ChatMessage): Promise<boolean> {
-    if (!this.exist(msg.id)) {
+    if (!this.exist(msg.id.value)) {
       throw new Error("chat message is not found.");
     }
     messages = messages.map((message) => {
@@ -42,19 +43,19 @@ export class ChatMessageRepo implements IChatMessageRepo {
     return true;
   }
 
-  public async delete(id: UniqueID): Promise<boolean> {
-    if (!this.exist(id)) {
+  public async delete(chatMessageId: ChatMessageId): Promise<boolean> {
+    if (!this.exist(chatMessageId)) {
       throw new Error("chat message is not found.");
     }
     messages = messages.filter((message) => {
-      return id.equals(message.id);
+      return message.id.value === chatMessageId;
     });
     return true;
   }
 
-  private exist(id: UniqueID): boolean {
+  private exist(id: string): boolean {
     const msg = messages.find((message: ChatMessage) => {
-      return id.equals(message.id);
+      return message.id.value === id;
     });
     return !!msg;
   }
