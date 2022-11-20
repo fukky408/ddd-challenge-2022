@@ -1,6 +1,7 @@
 import { Entity } from "../../../shared/domain/Entity";
 import { ChatRoomMember, ChatRoomMemberId } from "../domain/ChatRoomMember";
 import { Nominal, nominal } from "nominal-types";
+import { OrganizationMemberId } from "../../accounts/domain/OrganizationMember";
 
 type ChatRoomProps = {
   name: string;
@@ -30,6 +31,11 @@ export class ChatRoom extends Entity<ChatRoomProps> {
   public isMember(memberId: string) {
     const chatRoomMemberIds = this.chatRoomMembers.map((c) => c.id.value);
     return chatRoomMemberIds.includes(memberId);
+  }
+
+  public hasOrganizationMember(organizationMemberId: OrganizationMemberId) {
+    const organizationMemberIds = this.chatRoomMembers.map((c) => c.organizationMemberId);
+    return organizationMemberIds.includes(organizationMemberId);
   }
 
   public addChatRoomMember(chatRoomMember: ChatRoomMember) {
