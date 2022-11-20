@@ -1,12 +1,11 @@
-
-
 import { Entity } from "../../../shared/domain/Entity";
 import { ScheduleStatus } from "./ScheduleStatus";
 import { ChatRoomId } from "./ChatRoom";
 import { nominal } from "nominal-types";
+import { MessageBody } from "./MessageBody";
 
 type ScheduledChatMessageProps = {
-  body: string;
+  body: MessageBody;
   senderId: string;
   chatRoomId: ChatRoomId;
   scheduleStatus: ScheduleStatus;
@@ -33,7 +32,7 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public changeChatRoomId(chatRoomId: ChatRoomId) {
     return new ScheduledChatMessage({ ...this.props, chatRoomId });
   }
-  public changeBody(body: string) {
+  public changeBody(body: MessageBody) {
     return new ScheduledChatMessage({ ...this.props, body });
   }
   public changePostScheduledAt(postScheduledAt: Date) {

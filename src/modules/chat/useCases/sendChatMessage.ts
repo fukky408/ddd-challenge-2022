@@ -1,10 +1,11 @@
 import { ChatMessage } from "../domain/ChatMessage";
+import { MessageBody } from "../domain/MessageBody";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IChatMessageRepo } from "../repositories/IChatMessageRepo";
 import { UseCase } from "../../../shared/core/UseCase";
 
 type SendChatMessageRequest = {
-  body: string;
+  body: MessageBody;
   senderId: string;
   chatRoomId: string;
   sendAt: Date;

@@ -36,7 +36,7 @@ export class ScheduledChatMessageRepoImple {
       throw new Error("scheduled chat message is not found.");
     }
     messages = messages.filter((message) => {
-      return message.id != id;
+      return message.id !== id;
     });
     return true;
   }

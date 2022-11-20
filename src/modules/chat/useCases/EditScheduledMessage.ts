@@ -1,11 +1,12 @@
 import { UseCase } from "../../../shared/core/UseCase";
 import { ChatRoomId } from "../domain/ChatRoom";
+import { MessageBody } from "../domain/MessageBody";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo";
 
 type Request = {
   scheduledMessageId: string;
-  body: string;
+  body: MessageBody;
   chatRoomId: ChatRoomId;
   postScheduledAt: Date;
 };
