@@ -40,7 +40,7 @@ export class SendChatMessage
       );
     }
 
-    const chatMessage = ChatMessage.create(request);
+    const chatMessage = new ChatMessage(request);
 
     await this.chatMessageRepo.save(chatMessage);
     return chatMessage;

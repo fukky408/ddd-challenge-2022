@@ -1,10 +1,11 @@
 import Fastify from "fastify";
-import { Middleware } from "../../../shared/infra/middleware";
+import { Middleware } from "./shared/infra/middleware";
 
 const fastify = Fastify({
   logger: true,
 });
 
+// use middleware to auth or something
 const middleware = new Middleware();
 
 fastify.get(
@@ -17,3 +18,14 @@ fastify.get(
     // call controller
   }
 );
+
+const start = async () => {
+  try {
+    await fastify.listen({ port: 3000 });
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();

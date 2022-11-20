@@ -1,35 +1,45 @@
+import { Nominal, nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
+import { Email } from "./Email";
+import { UserName } from "./UserName";
 
 type UserProps = {
-  name: string;
-  email: string;
+  name: UserName;
+  email: Email;
   password: string;
   role: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
+export type UserId = Nominal<"UserId", string>;
+
 export class User extends Entity<UserProps> {
   constructor(props: UserProps, id?: string) {
     super(props, id);
   }
 
-  public changeName(newName: string) {
-    return new User({ ...this.props, name: newName }, this.props.id.value);
+  get userId(): UserId {
+    return nominal.make<UserId>(this.id.value);
   }
 
-  public changeEmail(newEmail: string) {
-    return new User({ ...this.props, email: newEmail }, this.props.id.value);
+  get name(): UserName {
+    return this.props.name;
+  }
+
+  public changeName(newName: UserName) {
+    return new User({ ...this.props, name: newName }, this.userId);
+  }
+
+  public changeEmail(newEmail: Email) {
+    return new User({ ...this.props, email: newEmail }, this.userId);
   }
 
   public changePassword(newPassword: string) {
-    return new User(
-      { ...this.props, password: newPassword },
-      this.props.id.value
-    );
+    return new User({ ...this.props, password: newPassword }, this.userId);
   }
 
   public changeRole(newRole: string) {
-    return new User({ ...this.props, role: newRole }, this.props.id.value);
+    return new User({ ...this.props, role: newRole }, this.userId);
   }
 }
