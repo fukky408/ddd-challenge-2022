@@ -5,9 +5,9 @@ import { ChatRoomMemberId } from "../../domain/ChatRoomMember";
 let messages: ScheduledChatMessage[] = [];
 
 export class ScheduledChatMessageRepo {
-  public async save(msg: ScheduledChatMessage): Promise<boolean > {
+  public async save(msg: ScheduledChatMessage): Promise<boolean> {
     messages.push(msg);
-    return true
+    return true;
   }
 
   public async findById(id: string): Promise<ScheduledChatMessage | undefined> {
@@ -49,11 +49,13 @@ export class ScheduledChatMessageRepo {
     return true;
   }
 
-  public async findOverScheduledTime(scheduledAt: Date): Promise<ScheduledChatMessage[]> {
+  public async findOverScheduledTime(
+    scheduledAt: Date
+  ): Promise<ScheduledChatMessage[]> {
     const msgs = messages.filter((message: ScheduledChatMessage) => {
-      return message.postScheduledAt > scheduledAt
+      return message.sendScheduledAt > scheduledAt;
     });
-    return msgs
+    return msgs;
   }
 
   exist(id: string): boolean {
