@@ -7,7 +7,7 @@ type Request = {
   scheduledMessageId: string;
   body: string;
   chatRoomId: ChatRoomId;
-  postScheduledAt: Date;
+  sendScheduledAt: Date;
 };
 
 type Response = boolean;
@@ -40,7 +40,7 @@ export class EditScheduledMessage
     const updateMsg = msg
       .changeBody(request.body)
       .changeChatRoomId(request.chatRoomId)
-      .changePostScheduledAt(request.postScheduledAt);
+      .changePostScheduledAt(request.sendScheduledAt);
 
     const res = await this.scheduledChatMessageRepo.update(updateMsg);
     return res;
