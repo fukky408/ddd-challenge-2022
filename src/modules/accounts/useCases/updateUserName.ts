@@ -1,12 +1,13 @@
 import { IUserRepo } from "../repositories/IUserRepo";
 import { UseCase } from "../../../shared/core/UseCase";
+import { UserName } from "../domain/UserName";
 
 type Request = {
   userId: string;
   userName: string;
 };
 
-type Response = void;
+type Response = boolean;
 
 export class UpdateUserName implements UseCase<Request, Promise<Response>> {
   private userRepo: IUserRepo;
@@ -16,14 +17,14 @@ export class UpdateUserName implements UseCase<Request, Promise<Response>> {
   }
 
   public async execute(request: Request): Promise<Response> {
-    const user = await this.userRepo.findUserByUserId(request.userId);
-
+    const user = await this.userRepo.findUserById(request.userId);
     if (!user) {
-      throw new Error("User not found");
+      throw new Error(`userId=${request.userId} not found`);
     }
 
-    user.changeName(request.userName);
-
-    await this.userRepo.save(user);
+    const userName = new UserName(request.userName);
+    const updated = user.changeName(userName);
+    const res = await this.userRepo.save(updated);
+    return res;
   }
 }

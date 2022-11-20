@@ -7,7 +7,6 @@ type UserProps = {
   name: UserName;
   email: Email;
   password: string;
-  role: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -37,9 +36,5 @@ export class User extends Entity<UserProps> {
 
   public changePassword(newPassword: string) {
     return new User({ ...this.props, password: newPassword }, this.userId);
-  }
-
-  public changeRole(newRole: string) {
-    return new User({ ...this.props, role: newRole }, this.userId);
   }
 }

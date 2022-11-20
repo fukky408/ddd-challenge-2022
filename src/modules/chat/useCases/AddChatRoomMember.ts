@@ -1,11 +1,10 @@
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { UseCase } from "../../../shared/core/UseCase";
-import { IUserRepo } from "../../users/repositories/IUserRepo";
+import { IUserRepo } from "../../accounts/repositories/IUserRepo";
 import { ChatRoomMember } from "../domain/ChatRoomMember";
 
 type Request = {
   userId: string;
-  roleKind: "MEMBER" | "OWNER";
   chatRoomId: string;
   chatRoomName: string;
 };
@@ -37,7 +36,6 @@ export class AddChatRoomMember implements UseCase<Request, Promise<Response>> {
     const chatRoomMember = new ChatRoomMember({
       name: user.name,
       userId: user.userId,
-      roleKind: request.roleKind,
     });
 
     const updatedChatRoom = chatRoom.addChatRoomMember(chatRoomMember);

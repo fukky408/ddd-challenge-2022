@@ -1,12 +1,11 @@
 import { nominal, Nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
-import { UserId } from "../../users/domain/User";
-import { UserName } from "../../users/domain/UserName";
+import { UserId } from "../../accounts/domain/User";
+import { UserName } from "../../accounts/domain/UserName";
 
 type ChatRoomMemberProps = {
   name: UserName;
   userId: UserId;
-  roleKind: "MEMBER" | "OWNER";
   joinedAt?: Date;
 };
 
@@ -19,9 +18,5 @@ export class ChatRoomMember extends Entity<ChatRoomMemberProps> {
 
   get chatRoomMemberId(): ChatRoomMemberId {
     return nominal.make<ChatRoomMemberId>(this.id.value);
-  }
-
-  public changeRoleKind(roleKind: "MEMBER" | "OWNER") {
-    return new ChatRoomMember({ ...this.props, roleKind });
   }
 }
