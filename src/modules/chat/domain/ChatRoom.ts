@@ -1,30 +1,47 @@
 import { Entity } from "../../../shared/domain/Entity";
-import { UniqueID } from "../../../shared/domain/UniqueID";
-import { User } from "../../users/domain/User";
-import { ChatRoomMember } from "./ChatRoomMember";
+import { ChatRoomMember, ChatRoomMemberId } from "../domain/ChatRoomMember";
+import { Nominal, nominal } from "nominal-types";
 
 type ChatRoomProps = {
   name: string;
-  adminUser: User;
-  createdAt: Date;
-  updatedAt: Date;
-  chatRoomMembers: ChatRoomMember[]
+  chatRoomMembers: ChatRoomMember[];
+  createdAt?: Date;
 };
 
-export class ChatRoom extends Entity<ChatRoomProps> {
-  public readonly id: UniqueID;
-  public readonly createdAt: Date;
-  public readonly updatedAt: Date;
-  private chatRoomMembers: ChatRoomMember[]
+export type ChatRoomId = Nominal<"ChatRoomId", string>;
 
+export class ChatRoom extends Entity<ChatRoomProps> {
   constructor(props: ChatRoomProps, id?: string) {
     super(props, id);
   }
 
-  memberExist(userid: UniqueID): boolean {
-    const m = this.chatRoomMembers.find(member => {
-      return member.userID === userid
-    })
-    return !!m
+  get chatRoomId(): ChatRoomId {
+    return nominal.make<ChatRoomId>(this.id.value);
+  }
+
+  get chatRoomMembers() {
+    return this.props.chatRoomMembers;
+  }
+
+  public changeName(newName: string) {
+    return new ChatRoom({ ...this.props, name: newName });
+  }
+
+  public isMember(memberId: string) {
+    const chatRoomMemberIds = this.chatRoomMembers.map((c) => c.id.value);
+    return chatRoomMemberIds.includes(memberId);
+  }
+
+  public addChatRoomMember(chatRoomMember: ChatRoomMember) {
+    const updated = [...this.chatRoomMembers, chatRoomMember];
+    return new ChatRoom({ ...this.props, chatRoomMembers: updated });
+  }
+
+  // Q: interfaceを合わせて，chatRoomMemberを渡すようにしたほうが良い？
+  public removeChatMember(memberId: ChatRoomMemberId) {
+    const filtered = this.chatRoomMembers.filter(
+      (m) => m.chatRoomMemberId !== memberId
+    );
+    return new ChatRoom({ ...this.props, chatRoomMembers: filtered });
   }
 }

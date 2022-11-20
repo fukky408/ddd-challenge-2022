@@ -1,15 +1,27 @@
+import { nominal, Nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
-import { UniqueID } from "../../../shared/domain/UniqueID";
+import { UserId } from "../../users/domain/User";
+import { UserName } from "../../users/domain/UserName";
 
 type ChatRoomMemberProps = {
-  userID: string;
+  name: UserName;
+  userId: UserId;
+  roleKind: "MEMBER" | "OWNER";
+  joinedAt?: Date;
 };
 
-export class ChatRoomMember extends Entity<ChatRoomMemberProps> {
-  public readonly id: UniqueID;
-  public readonly userID: UniqueID;
+export type ChatRoomMemberId = Nominal<"ChatRoomMemberId", string>;
 
+export class ChatRoomMember extends Entity<ChatRoomMemberProps> {
   constructor(props: ChatRoomMemberProps, id?: string) {
     super(props, id);
+  }
+
+  get chatRoomMemberId(): ChatRoomMemberId {
+    return nominal.make<ChatRoomMemberId>(this.id.value);
+  }
+
+  public changeRoleKind(roleKind: "MEMBER" | "OWNER") {
+    return new ChatRoomMember({ ...this.props, roleKind });
   }
 }
