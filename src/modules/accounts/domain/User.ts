@@ -1,12 +1,13 @@
 import { Nominal, nominal } from "nominal-types";
 import { Entity } from "../../../shared/domain/Entity";
 import { Email } from "./Email";
+import { Password } from "./Password";
 import { UserName } from "./UserName";
 
 type UserProps = {
   name: UserName;
   email: Email;
-  password: string;
+  password: Password;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -34,7 +35,7 @@ export class User extends Entity<UserProps> {
     return new User({ ...this.props, email: newEmail }, this.userId);
   }
 
-  public changePassword(newPassword: string) {
+  public changePassword(newPassword: Password) {
     return new User({ ...this.props, password: newPassword }, this.userId);
   }
 }

@@ -1,5 +1,5 @@
 import { Entity } from "../../../shared/domain/Entity";
-import { ScheduleStatus } from "./ScheduleStatus";
+import { ScheduleStatus, ScheduleStatusCandidate } from "./ScheduleStatus";
 import { ChatRoomId } from "./ChatRoom";
 import { ChatRoomMemberId } from "./ChatRoomMember";
 import { nominal } from "nominal-types";
@@ -10,7 +10,7 @@ type ScheduledChatMessageProps = {
   chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
   scheduleStatus: ScheduleStatus;
-  postScheduledAt: Date;
+  sendScheduledAt: Date;
   createdAt?: Date;
 };
 
@@ -19,6 +19,14 @@ type ScheduledChatMessageProps = {
  */
 export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   constructor(props: ScheduledChatMessageProps, id?: string) {
+    const now = new Date();
+    const isScheduledInPast =
+      props.scheduleStatus.value === ScheduleStatusCandidate.SCHEDULED &&
+      props.sendScheduledAt < now;
+
+    if (isScheduledInPast) {
+      throw new Error(`sendScheduledAt=${props.sendScheduledAt} is past.`);
+    }
     super(props, id);
   }
 
@@ -26,7 +34,7 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
     return nominal.make<ChatRoomId>(this.id.value);
   }
 
-  get chatRoomMemberId(): string {
+  get chatRoomMemberId(): ChatRoomMemberId {
     return this.chatRoomMemberId;
   }
 
@@ -34,8 +42,8 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
     return this.body;
   }
 
-  get postScheduledAt(): Date {
-    return this.postScheduledAt;
+  get sendScheduledAt(): Date {
+    return this.sendScheduledAt;
   }
 
   public changeChatRoomId(chatRoomId: ChatRoomId) {
@@ -44,8 +52,8 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   public changeBody(body: MessageBody) {
     return new ScheduledChatMessage({ ...this.props, body });
   }
-  public changePostScheduledAt(postScheduledAt: Date) {
-    return new ScheduledChatMessage({ ...this.props, postScheduledAt });
+  public changePostScheduledAt(sendScheduledAt: Date) {
+    return new ScheduledChatMessage({ ...this.props, sendScheduledAt });
   }
 
   public changeScheduleStatus(status: ScheduleStatus) {

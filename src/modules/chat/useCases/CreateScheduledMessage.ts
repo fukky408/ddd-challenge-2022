@@ -14,7 +14,7 @@ type Request = {
   body: MessageBody;
   chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
-  postScheduledAt: Date;
+  sendScheduledAt: Date;
 };
 
 type Response = boolean;
@@ -40,7 +40,7 @@ export class CreateScheduledMessage
       chatRoomMemberId: request.chatRoomMemberId,
       chatRoomId: request.chatRoomId,
       scheduleStatus: new ScheduleStatus(ScheduleStatusCandidate.SCHEDULED),
-      postScheduledAt: request.postScheduledAt,
+      sendScheduledAt: request.sendScheduledAt,
     });
     const res = await this.scheduledChatMessageRepo.save(msg);
     return res;
