@@ -1,7 +1,7 @@
 
 
 import { Entity } from "../../../shared/domain/Entity";
-import { ScheduleStatus } from "./ScheduleStatus";
+import { ScheduleStatus, ScheduleStatusCandidate } from "./ScheduleStatus";
 import { ChatRoomId } from "./ChatRoom";
 import { ChatRoomMemberId } from "./ChatRoomMember";
 import { nominal } from "nominal-types";
@@ -20,6 +20,10 @@ type ScheduledChatMessageProps = {
  */
 export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   constructor(props: ScheduledChatMessageProps, id?: string) {
+    const now = new Date()
+    if (props.scheduleStatus.value === ScheduleStatusCandidate.SCHEDULED && props.postScheduledAt < now) {
+      throw new Error("post scheduled at is must be feature!")
+    }
     super(props, id);
   }
 
