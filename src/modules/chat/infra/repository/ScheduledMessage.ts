@@ -1,13 +1,6 @@
 import { ScheduledChatMessage } from "../../domain/ScheduledChatMessage"
 import { UniqueID } from "../../../../shared/domain/UniqueID";
 
-export interface ScheduledChatMessageRepo {
-  get(id: UniqueID): ScheduledChatMessage;
-  save(msg: ScheduledChatMessage): void;
-  update(msg: ScheduledChatMessage): void;
-  delete(id: UniqueID): void;
-}
-
 let messages: ScheduledChatMessage[] = []
 
 export class ScheduledChatMessageRepoImple {
