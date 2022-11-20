@@ -31,7 +31,7 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
     return nominal.make<ChatRoomId>(this.id.value);
   }
 
-  get chatRoomMemberId(): string {
+  get chatRoomMemberId(): ChatRoomMemberId {
     return this.chatRoomMemberId;
   }
 

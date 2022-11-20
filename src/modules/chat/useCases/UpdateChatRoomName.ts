@@ -1,8 +1,9 @@
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { UseCase } from "../../../shared/core/UseCase";
+import { ChatRoomId } from "../domain/ChatRoom";
 
 type Request = {
-  chatRoomId: string;
+  chatRoomId: ChatRoomId;
   chatRoomName: string;
 };
 
