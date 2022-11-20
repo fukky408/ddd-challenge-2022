@@ -6,11 +6,12 @@ import {
   ScheduleStatus,
   ScheduleStatusCandidate,
 } from "../domain/ScheduleStatus";
+import { MessageBody } from "../domain/MessageBody";
 import { IChatRoomRepo } from "../repositories/IChatRoomRepo";
 import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo";
 
 type Request = {
-  body: string;
+  body: MessageBody;
   chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
   sendScheduledAt: Date;
