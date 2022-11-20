@@ -1,10 +1,11 @@
 import { UseCase } from "../../../shared/core/UseCase";
-import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo";
+import { ChatRoomMemberId } from "../domain/ChatRoomMember";
+import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo"
 
 type Request = {
   scheduledMessageId: string;
-  userId: string;
-};
+  chatRoomMemberId: ChatRoomMemberId;
+}
 
 type Response = boolean;
 
@@ -22,9 +23,9 @@ export class DeleteScheduledMessage
         `scheduledMessageId=${request.scheduledMessageId}) not found.`
       );
     }
-    if (!(msg.senderId === request.userId)) {
+    if (!(msg.chatRoomMemberId === request.chatRoomMemberId)) {
       throw new Error(
-        `userId=${request.userId} does not match to scheduled message userId=${msg.senderId}`
+        `chatRoomMemberId=${request.chatRoomMemberId} does not match to scheduled message chatRoomMemberId=${msg.chatRoomMemberId}`
       );
     }
     const res = await this.scheduledChatMessageRepo.delete(msg.id.value);

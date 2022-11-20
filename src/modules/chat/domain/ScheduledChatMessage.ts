@@ -1,12 +1,13 @@
 import { Entity } from "../../../shared/domain/Entity";
 import { ScheduleStatus } from "./ScheduleStatus";
 import { ChatRoomId } from "./ChatRoom";
+import { ChatRoomMemberId } from "./ChatRoomMember";
 import { nominal } from "nominal-types";
 import { MessageBody } from "./MessageBody";
 
 type ScheduledChatMessageProps = {
   body: MessageBody;
-  senderId: string;
+  chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
   scheduleStatus: ScheduleStatus;
   postScheduledAt: Date;
@@ -25,8 +26,16 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
     return nominal.make<ChatRoomId>(this.id.value);
   }
 
-  get senderId(): string {
-    return this.senderId;
+  get chatRoomMemberId(): string {
+    return this.chatRoomMemberId;
+  }
+
+  get body(): string {
+    return this.body;
+  }
+
+  get postScheduledAt(): Date {
+    return this.postScheduledAt;
   }
 
   public changeChatRoomId(chatRoomId: ChatRoomId) {
@@ -37,5 +46,9 @@ export class ScheduledChatMessage extends Entity<ScheduledChatMessageProps> {
   }
   public changePostScheduledAt(postScheduledAt: Date) {
     return new ScheduledChatMessage({ ...this.props, postScheduledAt });
+  }
+
+  public changeScheduleStatus(status: ScheduleStatus) {
+    return new ScheduledChatMessage({ ...this.props, scheduleStatus: status });
   }
 }

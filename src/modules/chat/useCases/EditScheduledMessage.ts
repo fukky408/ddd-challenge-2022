@@ -34,7 +34,7 @@ export class EditScheduledMessage
     if (!chatRoom) {
       throw new Error(`chatRoomId=${request.chatRoomId}) not found.`);
     }
-    if (!chatRoom.isMember(msg.senderId)) {
+    if (!chatRoom.isMember(msg.chatRoomMemberId)) {
       throw new Error("member not include in chatroom");
     }
 
