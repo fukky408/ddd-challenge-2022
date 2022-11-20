@@ -21,7 +21,8 @@
 
 ## Domain Model Diaglam
 
-![](./model.png)
+![domein-model-diagram](https://user-images.githubusercontent.com/38400669/202908773-2582f38f-4c83-4365-9971-97a106b1b0bc.png)
+
 
 ## Note
 
