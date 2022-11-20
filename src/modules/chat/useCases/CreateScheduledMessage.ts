@@ -1,6 +1,7 @@
 import { ScheduledChatMessage } from "../domain/ScheduledChatMessage";
 import { UseCase } from "../../../shared/core/UseCase";
 import { ChatRoomId } from "../domain/ChatRoom";
+import { ChatRoomMemberId } from "../domain/ChatRoomMember";
 import {
   ScheduleStatus,
   ScheduleStatusCandidate,
@@ -10,7 +11,7 @@ import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessage
 
 type Request = {
   body: string;
-  senderId: string;
+  chatRoomMemberId: ChatRoomMemberId;
   chatRoomId: ChatRoomId;
   postScheduledAt: Date;
 };
@@ -30,12 +31,12 @@ export class CreateScheduledMessage
     if (!chatRoom) {
       throw new Error(`chatRoomId=${request.chatRoomId}) not found.`);
     }
-    if (!chatRoom.isMember(request.senderId)) {
+    if (!chatRoom.isMember(request.chatRoomMemberId)) {
       throw new Error("member not include in chatroom");
     }
     const msg = new ScheduledChatMessage({
       body: request.body,
-      senderId: request.senderId,
+      chatRoomMemberId: request.chatRoomMemberId,
       chatRoomId: request.chatRoomId,
       scheduleStatus: new ScheduleStatus(ScheduleStatusCandidate.SCHEDULED),
       postScheduledAt: request.postScheduledAt,

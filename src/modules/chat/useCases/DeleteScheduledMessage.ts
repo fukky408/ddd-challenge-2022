@@ -1,9 +1,10 @@
 import { UseCase } from "../../../shared/core/UseCase";
+import { ChatRoomMemberId } from "../domain/ChatRoomMember";
 import { IScheduledChatMessageRepo } from "../repositories/IScheduledChatMessageRepo"
 
 type Request = {
   scheduledMessageId: string;
-  userId: string;
+  chatRoomMemberId: ChatRoomMemberId;
 }
 
 type Response = boolean;
@@ -18,8 +19,8 @@ export class DeleteScheduledMessage implements UseCase<Request, Promise<Response
     if (!msg) {
       throw new Error(`scheduledMessageId=${request.scheduledMessageId}) not found.`);
     }
-    if (!(msg.senderId === request.userId)) {
-      throw `request userId=${request.userId} is not match to scheduled message userId=${msg.senderId}`
+    if (!(msg.chatRoomMemberId === request.chatRoomMemberId)) {
+      throw `request userId=${request.chatRoomMemberId} is not match to scheduled message userId=${msg.chatRoomMemberId}`
     }
     const res = await this.scheduledChatMessageRepo.delete(msg.id.value)
     return res
